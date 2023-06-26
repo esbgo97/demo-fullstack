@@ -1,3 +1,6 @@
+using Databases;
+using Repositories;
+using Business;
 
 namespace DemoFullStack
 {
@@ -10,6 +13,10 @@ namespace DemoFullStack
             // Add services to the container.
 
             builder.Services.AddControllersWithViews();
+
+            builder.Services.ConfigureDatabases();
+            builder.Services.ConfigureRepositories();
+            builder.Services.ConfigureBusiness();
 
             var app = builder.Build();
 

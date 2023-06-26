@@ -1,6 +1,6 @@
 ﻿namespace Utils
 {
-    public class Class1
+    public class UtilsStartup
     {
 
     }
