@@ -1,47 +1,78 @@
-import React, { Component } from 'react';
-import { Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import './NavMenu.css';
+import React from "react";
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import { Menu } from "@mui/icons-material";
+import AppRoutes from "../AppRoutes";
+import { Link } from "react-router-dom";
 
-export class NavMenu extends Component {
-  static displayName = NavMenu.name;
+export const NavMenu = (props) => {
+  // const { window } = props;
+  // const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [authenticate, setAuthenticate] = React.useState(false);
 
-  constructor (props) {
-    super(props);
+  const handleDrawerToggle = () => {
+    // setMobileOpen((prevState) => !prevState);
+  };
 
-    this.toggleNavbar = this.toggleNavbar.bind(this);
-    this.state = {
-      collapsed: true
-    };
-  }
+  return (
+    <AppBar component="nav">
+      <Toolbar>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          onClick={handleDrawerToggle}
+          sx={{ mr: 2, display: { sm: "none" } }}
+        >
+          <Menu />
+        </IconButton>
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+        >
+          <Link to="/" style={{ textDecoration: "none", color: "#fff" }}>
+            Demo FullStack - (.NET & ReactJS)
+          </Link>
+        </Typography>
+        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          {authenticate ? <SignedInRoutes /> : <SignedOutRoutes />}
+        </Box>
+      </Toolbar>
+    </AppBar>
+  );
+};
 
-  toggleNavbar () {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
-  }
+const SignedInRoutes = () => {
+  return (
+    <>
+      {AppRoutes
+        .filter((r) => !["/login", "/register", "/"].includes(r.path))
+        .map((item, index) => (
+          <Link key={index} style={{ textDecoration: "none" }} to={item.path}>
+            <Button sx={{ color: "#fff" }}>{item.name}</Button>
+          </Link>
+        ))}
+    </>
+  );
+};
 
-  render() {
-    return (
-      <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container light>
-          <NavbarBrand tag={Link} to="/">DemoFullStack</NavbarBrand>
-          <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-          <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
-            <ul className="navbar-nav flex-grow">
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
-              </NavItem>
-            </ul>
-          </Collapse>
-        </Navbar>
-      </header>
-    );
-  }
-}
+const SignedOutRoutes = () => {
+  return (
+    <>
+      {AppRoutes
+        .filter((r) => !["/dashboard"].includes(r.path))
+        .map((item, index) => (
+          <Link key={index} style={{ textDecoration: "none" }} to={item.path}>
+            <Button sx={{ color: "#fff" }}>{item.name}</Button>
+          </Link>
+        ))}
+    </>
+  );
+};
