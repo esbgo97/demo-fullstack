@@ -12,12 +12,10 @@ import AppRoutes from "../AppRoutes";
 import { Link } from "react-router-dom";
 
 export const NavMenu = (props) => {
-  // const { window } = props;
-  // const [mobileOpen, setMobileOpen] = React.useState(false);
   const [authenticate, setAuthenticate] = React.useState(false);
 
   const handleDrawerToggle = () => {
-    // setMobileOpen((prevState) => !prevState);
+
   };
 
   return (
@@ -38,7 +36,7 @@ export const NavMenu = (props) => {
           sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
         >
           <Link to="/" style={{ textDecoration: "none", color: "#fff" }}>
-            Demo FullStack - (.NET & ReactJS)
+            Demo FullStack
           </Link>
         </Typography>
         <Box sx={{ display: { xs: "none", sm: "block" } }}>
